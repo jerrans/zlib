@@ -211,7 +211,12 @@ elseif(BUILD_SHARED_LIBS AND WIN32)
 endif()
 
 if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
-    install(TARGETS zlib zlibstatic
+    if( INSTALL_SHARED_LIBS )
+        set(INSTALL_TARGETS zlib zlibstatic)
+    else()
+        set(INSTALL_TARGETS zlibstatic)
+    endif()
+    install(TARGETS ${INSTALL_TARGETS}
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}" )
